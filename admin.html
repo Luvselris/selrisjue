@@ -20,6 +20,7 @@
       --border: rgba(192, 132, 252, 0.3);
       --text: #f3e8ff;
       --text-muted: #a89bb9;
+      --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; }
     body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
@@ -52,10 +53,23 @@
     }
     .btn-secondary { background: var(--card-sub); color: var(--primary); border: 1px solid var(--border); margin-top: 10px; }
     
+    .btn-add {
+      background: rgba(192, 132, 252, 0.15); color: var(--primary); border: 1.5px dashed var(--primary);
+      font-size: 13px; padding: 10px; border-radius: 14px; margin-top: 8px; width: 100%; cursor: pointer;
+    }
+
     /* Highlight Editor Card */
     .hl-edit-box {
       background: var(--card-sub); border: 1px solid var(--border); border-radius: 16px;
-      padding: 14px; margin-bottom: 12px;
+      padding: 14px; margin-bottom: 14px; position: relative;
+    }
+    .hl-header-bar {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    }
+    .hl-tag { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .hl-delete-btn {
+      background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger);
+      padding: 4px 10px; border-radius: 10px; font-size: 11.5px; font-weight: 600; cursor: pointer;
     }
     .hl-gallery {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
@@ -63,8 +77,9 @@
     .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #000; }
     .hl-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .hl-img-del {
-      position: absolute; top: 2px; right: 2px; background: rgba(220, 38, 38, 0.85); color: #fff;
-      border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; cursor: pointer;
+      position: absolute; top: 2px; right: 2px; background: rgba(239, 68, 68, 0.85); color: #fff;
+      border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
     }
 
     .hidden { display: none !important; }
@@ -129,10 +144,11 @@
       </div>
     </div>
 
-    <!-- 2. จัดการ 4 ไฮไลท์สตอรี่ (ใส่ภาพได้ 25 ภาพ/ไฮไลท์) -->
+    <!-- 2. จัดการไฮไลท์รีวิว (เพิ่ม-ลบไฮไลท์ และ ลบรูปรีวิวรายภาพ) -->
     <div class="card">
-      <div class="title">✨ จัดการ 4 ไฮไลท์สตอรี่ (สูงสุด 25 ภาพ/อัน)</div>
+      <div class="title">✨ จัดการไฮไลท์รีวิว (ลบ/เพิ่ม ได้อิสระ)</div>
       <div id="highlightsManager"></div>
+      <button type="button" class="btn-add" onclick="addNewHighlight()">➕ เพิ่มไฮไลท์รีวิวใหม่</button>
     </div>
 
     <!-- 3. จัดการโพสต์ 6 โพสต์ -->
@@ -231,7 +247,6 @@
     }
   }
 
-  // อัปโหลดรูปภาพตรงจากโทรศัพท์ (แปลงเป็น WebP บีบอัดอัตโนมัติ)
   function uploadDirectImage(event, targetInputId) {
     const file = event.target.files[0];
     if (!file) return;
@@ -267,7 +282,7 @@
       document.getElementById("profileImg").value = d.profileImg || "https://i.ibb.co/mCZ2x6pK/IMG-3558.jpg";
       document.getElementById("discordFrame").value = d.discordFrame || "https://i.ibb.co/nqR30Rcw/IMG-3563.png";
 
-      if (d.highlights && d.highlights.length) highlightsData = d.highlights;
+      if (d.highlights && Array.isArray(d.highlights)) highlightsData = d.highlights;
       renderHighlightManagers();
 
       if (d.posts && d.posts.length) postsData = d.posts;
@@ -282,16 +297,21 @@
     });
   }
 
+  // เรนเดอร์ตัวจัดการไฮไลท์ พร้อมปุ่ม "ลบไฮไลท์ทั้งก้อน" และ "ลบรูปในไฮไลท์ทีละรูป"
   function renderHighlightManagers() {
     const box = document.getElementById("highlightsManager");
     box.innerHTML = "";
-    highlightsData.slice(0, 4).forEach((hl, idx) => {
+    highlightsData.forEach((hl, idx) => {
       const wrap = document.createElement("div");
       wrap.className = "hl-edit-box";
       wrap.innerHTML = `
+        <div class="hl-header-bar">
+          <span class="hl-tag">ไฮไลท์รีวิวที่ ${idx+1}</span>
+          <button type="button" class="hl-delete-btn" onclick="deleteEntireHighlight(${idx})">🗑️ ลบไฮไลท์นี้</button>
+        </div>
         <div class="field-group">
-          <label class="field-label">ชื่อไฮไลท์ที่ ${idx+1}</label>
-          <input type="text" class="input-box" value="${hl.title}" oninput="highlightsData[${idx}].title = this.value">
+          <label class="field-label">ชื่อหัวข้อไฮไลท์</label>
+          <input type="text" class="input-box" value="${hl.title || ''}" oninput="highlightsData[${idx}].title = this.value">
         </div>
         <div class="field-group">
           <label class="field-label">รูปหน้าปกไฮไลท์ (ลิงก์/อัปโหลด)</label>
@@ -301,12 +321,11 @@
           ➕ อัปโหลดรูปเพิ่มเข้าสตอรี่นี้ (จากมือถือ)
           <input type="file" accept="image/*" multiple style="display:none;" onchange="uploadStoryImages(event, ${idx})">
         </label>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ (กดกากบาทสีแดงบนรูปเพื่อลบ)</div>
         <div class="hl-gallery" id="hl-gal-${idx}"></div>
       `;
       box.appendChild(wrap);
 
-      // Render thumbnails
       const gal = wrap.querySelector(`#hl-gal-${idx}`);
       if (hl.images) {
         hl.images.forEach((imgUrl, imgIdx) => {
@@ -314,12 +333,30 @@
           item.className = "hl-img-wrap";
           item.innerHTML = `
             <img src="${imgUrl}">
-            <button type="button" class="hl-img-del" onclick="removeStoryImage(${idx}, ${imgIdx})">×</button>
+            <button type="button" class="hl-img-del" title="ลบภาพนี้" onclick="removeStoryImage(${idx}, ${imgIdx})">✕</button>
           `;
           gal.appendChild(item);
         });
       }
     });
+  }
+
+  // ลบไฮไลท์ทั้งก้อน
+  function deleteEntireHighlight(index) {
+    if (confirm(`ต้องการลบไฮไลท์ "${highlightsData[index].title || 'รีวิว'}" นี้ทิ้งใช่ไหมคะ?`)) {
+      highlightsData.splice(index, 1);
+      renderHighlightManagers();
+    }
+  }
+
+  // เพิ่มไฮไลท์ใหม่
+  function addNewHighlight() {
+    highlightsData.push({
+      title: `Review ${highlightsData.length + 1}`,
+      cover: "",
+      images: []
+    });
+    renderHighlightManagers();
   }
 
   function uploadStoryImages(event, hlIndex) {
@@ -355,6 +392,7 @@
     });
   }
 
+  // ลบรูปเดี่ยวในสตอรี่
   function removeStoryImage(hlIndex, imgIndex) {
     highlightsData[hlIndex].images.splice(imgIndex, 1);
     renderHighlightManagers();
