@@ -150,9 +150,23 @@
       padding: 16px; box-shadow: 0 8px 24px var(--pink-glow);
     }
     .form-title { font-size: 14px; font-weight: 700; color: var(--pink-main); margin-bottom: 10px; text-align: center; }
-    .star-select-box { display: flex; justify-content: center; gap: 6px; margin-bottom: 12px; }
-    .star-btn { background: none; border: none; font-size: 22px; cursor: pointer; opacity: 0.35; transition: transform 0.15s; }
-    .star-btn.active { opacity: 1; transform: scale(1.15); }
+    
+    /* สไตล์ดาวสีชมพูมินิมอล */
+    .star-select-box { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; }
+    .star-btn {
+      background: none; border: none; cursor: pointer; padding: 2px;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: transform 0.15s ease;
+    }
+    .star-btn svg {
+      width: 26px; height: 26px; fill: #ffd8e1; stroke: #fca5b9; stroke-width: 1.2;
+      transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
+    }
+    .star-btn.active svg {
+      fill: #f47291; stroke: #e05879; transform: scale(1.08);
+      filter: drop-shadow(0 2px 6px rgba(244, 114, 145, 0.4));
+    }
+
     .review-input, .review-textarea {
       width: 100%; padding: 10px 14px; border-radius: 14px; border: 1.5px solid var(--border-pink);
       outline: none; font-size: 13px; background: #fff; color: var(--text-main); margin-bottom: 10px;
@@ -170,7 +184,8 @@
     }
     .review-head { display: flex; justify-content: space-between; align-items: center; }
     .review-name { font-size: 13.5px; font-weight: 700; color: var(--text-main); }
-    .review-stars { font-size: 12px; letter-spacing: 2px; color: #ffb703; }
+    .review-stars-box { display: flex; gap: 3px; }
+    .review-stars-box svg { width: 14px; height: 14px; fill: #f47291; }
     .review-msg { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; white-space: pre-line; }
 
     /* แท็บ 3: Details */
@@ -296,13 +311,26 @@
       <div class="review-section">
         <div class="review-form-card">
           <div class="form-title">เขียนรีวิวให้ร้านค้า</div>
+          
+          <!-- ดาวสีชมพูมินิมอล SVG -->
           <div class="star-select-box">
-            <button type="button" class="star-btn active" onclick="setStars(1)">★</button>
-            <button type="button" class="star-btn active" onclick="setStars(2)">★</button>
-            <button type="button" class="star-btn active" onclick="setStars(3)">★</button>
-            <button type="button" class="star-btn active" onclick="setStars(4)">★</button>
-            <button type="button" class="star-btn active" onclick="setStars(5)">★</button>
+            <button type="button" class="star-btn active" onclick="setStars(1)">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+            <button type="button" class="star-btn active" onclick="setStars(2)">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+            <button type="button" class="star-btn active" onclick="setStars(3)">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+            <button type="button" class="star-btn active" onclick="setStars(4)">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
+            <button type="button" class="star-btn active" onclick="setStars(5)">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </button>
           </div>
+
           <input type="text" id="custName" class="review-input" placeholder="ชื่อของคุณ">
           <textarea id="custMsg" class="review-textarea" rows="3" placeholder="เขียนข้อความรีวิวได้เลยนะคะ"></textarea>
           <button type="button" class="review-submit-btn" id="submitReviewBtn" onclick="submitCustomerReview()">ส่งรีวิว</button>
@@ -514,10 +542,16 @@
         const d = doc.data();
         const card = document.createElement("div");
         card.className = "review-card";
+        
+        let starsSvg = '';
+        for (let i = 0; i < (d.stars || 5); i++) {
+          starsSvg += `<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+        }
+
         card.innerHTML = `
           <div class="review-head">
             <span class="review-name">${d.name}</span>
-            <span class="review-stars">${'★'.repeat(d.stars || 5)}</span>
+            <div class="review-stars-box">${starsSvg}</div>
           </div>
           <div class="review-msg">${d.msg}</div>
         `;
