@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase SDK (ใช้ฐานข้อมูล ig_review_site แยกเดี่ยว) -->
+  <!-- Firebase SDK (ใช้ฐานข้อมูล ig_review_site แยกเดี่ยว 100%) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
@@ -22,13 +22,12 @@
       --border-purple: rgba(192, 132, 252, 0.25);
       --text-main: #f3e8ff;
       --text-muted: #a89bb9;
-      --ig-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; overflow-x: hidden; position: relative; }
 
-    /* Pop-up ต้อนรับเพื่อให้เพลงเล่นทันที 100% บนมือถือ */
+    /* Pop-up เพื่อเริ่มเล่นเพลงทันที 100% */
     .enter-gate {
       position: fixed; inset: 0; background: rgba(15, 12, 21, 0.96); backdrop-filter: blur(15px);
       z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -46,7 +45,7 @@
       background: linear-gradient(135deg, #a855f7, #6b21a8); color: #fff; font-weight: 600; cursor: pointer;
     }
 
-    /* เลเยอร์ลูกเล่นลอยไปมา */
+    /* เลเยอร์ลูกเล่นลอย */
     .floating-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .float-item {
       position: absolute; bottom: -80px; width: 44px; height: 44px; object-fit: contain;
@@ -68,7 +67,7 @@
     .profile-section { padding: 0 18px; margin-top: -55px; position: relative; }
     .profile-row { display: flex; align-items: flex-end; justify-content: space-between; }
     
-    /* Discord Style Profile Frame */
+    /* Discord Style Frame */
     .avatar-wrapper { position: relative; width: 100px; height: 100px; display: inline-block; }
     .avatar-img {
       width: 82px; height: 82px; border-radius: 50%; object-fit: cover;
@@ -90,7 +89,7 @@
     .bio-handle { font-size: 13px; color: var(--accent-purple); margin-top: 2px; }
     .bio-desc { font-size: 13px; color: #d8b4fe; line-height: 1.5; margin-top: 6px; white-space: pre-line; }
 
-    /* Music Controller Mini Bar */
+    /* Music Mini Button */
     .music-bar {
       display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
       padding: 5px 14px; background: var(--card-sub); border: 1px solid var(--border-purple);
@@ -116,7 +115,7 @@
     }
     .highlight-name { font-size: 11px; color: var(--text-main); max-width: 68px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
 
-    /* 4 Tabs Menu */
+    /* 4 Tabs Header */
     .tabs-header {
       display: flex; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08);
       margin-top: 10px;
@@ -142,7 +141,7 @@
     .review-list { display: flex; flex-direction: column; gap: 12px; }
     .review-card {
       background: var(--card-dark); border: 1px solid var(--border-purple); border-radius: 18px;
-      padding: 14px; display: flex; gap: 12px; align-items: center;
+      padding: 14px; display: flex; gap: 12px; align-items: center; cursor: pointer;
     }
     .review-card img { width: 60px; height: 60px; border-radius: 12px; object-fit: cover; }
     .review-info { flex: 1; }
@@ -163,7 +162,7 @@
       text-decoration: none; color: #fff; font-weight: 600; font-size: 14px;
     }
 
-    /* Story Fullscreen Viewer */
+    /* Story Fullscreen Modal */
     .story-modal {
       position: fixed; inset: 0; background: #000; z-index: 9999999;
       display: none; flex-direction: column; justify-content: space-between;
@@ -172,9 +171,8 @@
     .story-bars { display: flex; gap: 4px; padding: 12px 14px 6px; z-index: 10; }
     .story-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; }
     .story-bar-fill { width: 0%; height: 100%; background: #fff; transition: width 0.1s linear; }
-    .story-bar-fill.done { width: 100%; }
     .story-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 14px; z-index: 10; }
-    .story-user { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+    .story-user { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #fff; }
     .story-close { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; padding: 4px 8px; }
     .story-body { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; }
     .story-body img { max-width: 100%; max-height: 80vh; object-fit: contain; }
@@ -203,7 +201,7 @@
 </head>
 <body>
 
-  <!-- เข้าเว็บแล้วเล่นเพลงทันที -->
+  <!-- แตะ 1 ครั้งเพื่อเข้าสู่หน้าเว็บและเปิดเพลง -->
   <div class="enter-gate" id="enterGate" onclick="unlockAudioAndEnter()">
     <div class="enter-card">
       <div style="font-size: 38px; margin-bottom: 8px;">🎀</div>
@@ -215,26 +213,25 @@
 
   <audio id="bgMusic" loop preload="auto" src="https://file.garden/asG8Gt-rqWIpi3II/%E0%B8%A2%E0%B8%B4%E0%B8%99%E0%B8%94%E0%B8%B5%20Ost.%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%B2%E0%B8%A5%E0%B8%94%E0%B8%B2%20sarah%20salola%20Official%20MV.mp3"></audio>
 
-  <!-- เลเยอร์ลูกเล่นลอย -->
+  <!-- เลเยอร์ภาพลูกเล่นลอยไปมา -->
   <div class="floating-layer" id="floatingLayer"></div>
 
   <div class="wrapper">
-    <!-- แบนเนอร์บนหัวโปรไฟล์แบบ GIF -->
+    <!-- แบนเนอร์ GIF -->
     <div class="banner-box">
       <img id="bannerImg" src="https://c.tenor.com/qvn5EduVCSDAAAAC/tenor.gif" alt="Banner">
     </div>
 
-    <!-- ส่วนโปรไฟล์และกรอบดิสคอร์ด -->
+    <!-- ส่วนโปรไฟล์ + กรอบดิสคอร์ด -->
     <div class="profile-section">
       <div class="profile-row">
         <div class="avatar-wrapper">
           <img id="avatarImg" class="avatar-img" src="https://i.ibb.co/mCZ2x6pK/IMG-3558.jpg" alt="Profile">
-          <!-- กรอบดิสคอร์ดครอบโปรไฟล์ -->
           <img id="discordFrameImg" class="discord-frame" src="https://i.ibb.co/nqR30Rcw/IMG-3563.png" alt="Discord Frame">
         </div>
         <div class="stats-row">
           <div class="stat-item"><div class="stat-num" id="postCount">6</div><div class="stat-lbl">โพสต์</div></div>
-          <div class="stat-item"><div class="stat-num" id="reviewCount">4</div><div class="stat-lbl">ไฮไลท์</div></div>
+          <div class="stat-item"><div class="stat-num" id="reviewCount">0</div><div class="stat-lbl">ไฮไลท์</div></div>
           <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">ความพึงพอใจ</div></div>
         </div>
       </div>
@@ -251,7 +248,7 @@
       </div>
     </div>
 
-    <!-- ไฮไลท์สตอรี่ 4 อัน (เปิดดูได้สูงสุด 25 ภาพต่ออัน) -->
+    <!-- ไฮไลท์สตอรี่ (แสดงผลตามรายการที่เพิ่ม/ลบในแอดมิน) -->
     <div class="highlights-scroll" id="highlightsBar"></div>
 
     <!-- แถบ 4 หัวข้อ: home, review, details, contact -->
@@ -267,7 +264,7 @@
       <div class="posts-grid" id="postsGrid"></div>
     </div>
 
-    <!-- แท็บ 2: Review (รวมรีวิวเป็นหมวดหมู่) -->
+    <!-- แท็บ 2: Review (รวมไฮไลท์รีวิว) -->
     <div class="tab-content" id="tab-review">
       <div class="review-list" id="reviewList"></div>
     </div>
@@ -277,13 +274,13 @@
       <div class="details-box" id="detailsText"></div>
     </div>
 
-    <!-- แท็บ 4: Contact (ช่องทางการติดต่อ) -->
+    <!-- แท็บ 4: Contact (ช่องทางติดต่อ) -->
     <div class="tab-content" id="tab-contact">
       <div class="contact-box" id="contactLinks"></div>
     </div>
   </div>
 
-  <!-- Story Viewer Modal -->
+  <!-- Story Viewer Fullscreen Modal -->
   <div class="story-modal" id="storyModal">
     <div class="story-bars" id="storyBars"></div>
     <div class="story-header">
@@ -312,7 +309,7 @@
   </div>
 
   <script>
-    // 1. Firebase Config (แยก collection ig_review_site เด็ดขาด)
+    // 1. Firebase เชื่อมโยง collection ig_review_site เดี่ยวๆ
     const firebaseConfig = {
       apiKey: "AIzaSyCpAGDSy1NRgmLV_g7qJrCpwOhU9MrfQyY",
       authDomain: "benefitie.firebaseapp.com",
@@ -331,7 +328,7 @@
     let activeStoryImgIdx = 0;
     let storyTimer = null;
 
-    // 2. ดึงข้อมูลสดจากแอดมิน
+    // 2. ดึงข้อมูลอัปเดตสดจากแอดมิน
     db.collection("ig_review_site").doc("config").onSnapshot(doc => {
       if (doc.exists) {
         const d = doc.data();
@@ -346,20 +343,21 @@
         if (d.profileImg) document.getElementById("avatarImg").src = d.profileImg;
         if (d.discordFrame) document.getElementById("discordFrameImg").src = d.discordFrame;
 
-        // ไฮไลท์
-        if (d.highlights && d.highlights.length) {
+        // อัปเดตไฮไลท์ตามที่เพิ่ม/ลบ
+        if (d.highlights && Array.isArray(d.highlights)) {
           currentHighlights = d.highlights;
+          document.getElementById("reviewCount").textContent = d.highlights.length;
           renderHighlights(d.highlights);
           renderReviewList(d.highlights);
         }
 
-        // โพสต์ 6 ช่อง
+        // อัปเดต 6 โพสต์
         if (d.posts && d.posts.length) {
           currentPosts = d.posts;
           renderPosts(d.posts);
         }
 
-        // Details & Contact
+        // Details & Contacts
         if (d.details) document.getElementById("detailsText").textContent = d.details;
         if (d.contacts) renderContacts(d.contacts);
 
@@ -369,12 +367,12 @@
           music.play().catch(() => {});
         }
 
-        // ลูกเล่นลอย
+        // รูปลูกเล่นลอย
         if (d.floatPng) updateFloatingEffect(d.floatPng);
       }
     });
 
-    // 3. ระบบเพลง
+    // 3. ควบคุมเสียงเพลง
     const music = document.getElementById("bgMusic");
     const musicIcon = document.getElementById("musicIcon");
     const musicText = document.getElementById("musicText");
@@ -399,10 +397,11 @@
       }
     }
 
-    // 4. แสดงผล Highlights (4 ไฮไลท์)
+    // 4. เรนเดอร์ไฮไลท์วงกลม
     function renderHighlights(hl) {
       const bar = document.getElementById("highlightsBar");
       bar.innerHTML = "";
+      if (!hl.length) return;
       hl.forEach((item, idx) => {
         const cover = item.cover || (item.images && item.images[0]) || "https://i.ibb.co/mCZ2x6pK/IMG-3558.jpg";
         const div = document.createElement("div");
@@ -412,17 +411,17 @@
           <div class="highlight-ring">
             <img class="highlight-thumb" src="${cover}">
           </div>
-          <div class="highlight-name">${item.title}</div>
+          <div class="highlight-name">${item.title || 'Review'}</div>
         `;
         bar.appendChild(div);
       });
     }
 
-    // 5. แสดงผล Posts 6 ช่อง
+    // 5. เรนเดอร์โพสต์ 6 ช่อง
     function renderPosts(posts) {
       const grid = document.getElementById("postsGrid");
       grid.innerHTML = "";
-      posts.slice(0, 6).forEach((p, idx) => {
+      posts.slice(0, 6).forEach((p) => {
         const card = document.createElement("div");
         card.className = "post-card";
         card.onclick = () => openPostModal(p);
@@ -441,10 +440,14 @@
       document.getElementById("postModal").classList.remove("show");
     }
 
-    // 6. แท็บ Review & Contact
+    // 6. แท็บ Review & Contacts
     function renderReviewList(hl) {
       const list = document.getElementById("reviewList");
       list.innerHTML = "";
+      if (!hl.length) {
+        list.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:20px;">ยังไม่มีรีวิวค่ะ ♡</div>`;
+        return;
+      }
       hl.forEach((item, idx) => {
         const cover = item.cover || (item.images && item.images[0]) || "";
         const count = item.images ? item.images.length : 0;
@@ -454,7 +457,7 @@
         div.innerHTML = `
           <img src="${cover}">
           <div class="review-info">
-            <div class="review-title">${item.title}</div>
+            <div class="review-title">${item.title || 'Review'}</div>
             <div class="review-desc">รวมรีวิว ${count} รูปภาพ (แตะเพื่อเปิดดู)</div>
           </div>
           <span style="color: var(--accent-purple);">➔</span>
@@ -467,6 +470,7 @@
       const box = document.getElementById("contactLinks");
       box.innerHTML = "";
       contacts.forEach(c => {
+        if (!c.url) return;
         const a = document.createElement("a");
         a.href = c.url;
         a.target = "_blank";
@@ -476,7 +480,7 @@
       });
     }
 
-    // 7. ระบบ Story Viewer
+    // 7. ระบบเปิดดูสตอรี่
     function openStory(idx) {
       activeHighlightIdx = idx;
       activeStoryImgIdx = 0;
@@ -485,7 +489,7 @@
         alert("ไฮไลท์นี้ยังไม่มีรูปภาพค่ะ");
         return;
       }
-      document.getElementById("storyTitleText").textContent = hl.title;
+      document.getElementById("storyTitleText").textContent = hl.title || 'Highlight';
       buildStoryBars();
       showStoryImage();
       document.getElementById("storyModal").classList.add("show");
@@ -509,7 +513,6 @@
       const img = hl.images[activeStoryImgIdx];
       document.getElementById("storyActiveImg").src = img;
 
-      // Update Bar Fill
       hl.images.forEach((_, i) => {
         const fill = document.getElementById(`sbar-${i}`);
         if (!fill) return;
@@ -550,7 +553,7 @@
       document.getElementById("storyModal").classList.remove("show");
     }
 
-    // 8. สลับแท็บ 4 หัวข้อ
+    // 8. สลับแท็บเมนู 4 หัวข้อ
     function switchTab(tabId) {
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
       document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
@@ -558,12 +561,14 @@
       document.getElementById(`tab-${tabId}`).classList.add("active");
     }
 
-    // 9. ลูกเล่นลอย
+    // 9. ลูกเล่น PNG ลอย
+    let floatInterval = null;
     function updateFloatingEffect(pngUrl) {
       const box = document.getElementById("floatingLayer");
       box.innerHTML = "";
+      if (floatInterval) clearInterval(floatInterval);
       if (!pngUrl) return;
-      setInterval(() => {
+      floatInterval = setInterval(() => {
         const el = document.createElement("img");
         el.src = pngUrl;
         el.className = "float-item";
