@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Admin Dashboard ♡ IG Review Pastel</title>
+  <title>Admin Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,63 +13,62 @@
 
   <style>
     :root {
-      --bg-pastel: #faf7fd;
+      --bg-white: #ffffff;
       --card-bg: #ffffff;
-      --card-sub: #f6f0fe;
-      --purple-main: #9b72cf;
-      --purple-soft: #c4a7e7;
-      --purple-light: #f1e8fc;
-      --border-purple: #e8dcfa;
-      --text-main: #4a3e5c;
-      --text-muted: #8c7d9e;
+      --pink-soft: #ffb8c6;
+      --pink-main: #f47291;
+      --pink-glow: rgba(255, 184, 198, 0.35);
+      --border-pink: #ffe0e6;
+      --text-main: #4a3e42;
+      --text-muted: #8f7d82;
       --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; }
-    body { background: var(--bg-pastel); color: var(--text-main); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
+    body { background: radial-gradient(circle at top, #fff5f7 0%, #ffffff 60%, #fff0f3 100%); color: var(--text-main); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
     .container { width: 100%; max-width: 480px; }
     
     .card {
       background: var(--card-bg); border-radius: 24px; padding: 20px 18px;
-      box-shadow: 0 8px 25px rgba(155, 114, 207, 0.12); border: 1.5px solid var(--border-purple); margin-bottom: 16px;
+      box-shadow: 0 8px 25px var(--pink-glow); border: 1.5px solid var(--border-pink); margin-bottom: 16px;
     }
-    .title { font-size: 18px; font-weight: 700; color: var(--purple-main); text-align: center; margin-bottom: 16px; }
+    .title { font-size: 18px; font-weight: 700; color: var(--pink-main); text-align: center; margin-bottom: 16px; }
     .field-group { margin-bottom: 14px; }
     .field-label { font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; display: block; }
     .input-box, .textarea-box {
-      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--border-purple);
+      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--border-pink);
       outline: none; font-size: 13.5px; background: #fff; color: var(--text-main); transition: all 0.2s;
     }
-    .input-box:focus, .textarea-box:focus { border-color: var(--purple-main); box-shadow: 0 0 0 3px rgba(155, 114, 207, 0.18); }
+    .input-box:focus, .textarea-box:focus { border-color: var(--pink-main); box-shadow: 0 0 0 3px var(--pink-glow); }
     .textarea-box { resize: vertical; min-height: 80px; line-height: 1.5; }
 
     .file-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 9px 14px; background: var(--purple-light); border: 1.5px dashed var(--purple-main);
-      border-radius: 14px; color: var(--purple-main); font-size: 12.5px; font-weight: 600;
+      padding: 9px 14px; background: #fff5f7; border: 1.5px dashed var(--pink-main);
+      border-radius: 14px; color: var(--pink-main); font-size: 12.5px; font-weight: 600;
       cursor: pointer; width: 100%; margin-bottom: 6px;
     }
 
     .btn {
       width: 100%; padding: 12px; border-radius: 18px; border: none; font-size: 14.5px; font-weight: 600;
-      cursor: pointer; background: linear-gradient(135deg, var(--purple-soft), var(--purple-main)); color: #fff; margin-top: 6px;
-      box-shadow: 0 6px 16px rgba(155, 114, 207, 0.28);
+      cursor: pointer; background: linear-gradient(135deg, var(--pink-soft), var(--pink-main)); color: #fff; margin-top: 6px;
+      box-shadow: 0 6px 16px var(--pink-glow);
     }
-    .btn-secondary { background: #fff; color: var(--purple-main); border: 1.5px solid var(--border-purple); margin-top: 10px; box-shadow: none; }
+    .btn-secondary { background: #fff; color: var(--pink-main); border: 1.5px solid var(--border-pink); margin-top: 10px; box-shadow: none; }
     
     .btn-add {
-      background: var(--purple-light); color: var(--purple-main); border: 1.5px dashed var(--purple-main);
+      background: #fff5f7; color: var(--pink-main); border: 1.5px dashed var(--pink-main);
       font-size: 13px; padding: 10px; border-radius: 14px; margin-top: 8px; width: 100%; cursor: pointer; font-weight: 600;
     }
 
     /* Highlight Editor */
     .hl-edit-box {
-      background: #faf7fd; border: 1.5px solid var(--border-purple); border-radius: 18px;
+      background: #fffafa; border: 1.5px solid var(--border-pink); border-radius: 18px;
       padding: 14px; margin-bottom: 14px; position: relative;
     }
     .hl-header-bar {
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
     }
-    .hl-tag { font-size: 13px; font-weight: 700; color: var(--purple-main); }
+    .hl-tag { font-size: 13px; font-weight: 700; color: var(--pink-main); }
     .hl-delete-btn {
       background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5;
       padding: 4px 10px; border-radius: 10px; font-size: 11.5px; font-weight: 600; cursor: pointer;
@@ -77,7 +76,7 @@
     .hl-gallery {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
     }
-    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: var(--purple-light); }
+    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #fff0f3; }
     .hl-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .hl-img-del {
       position: absolute; top: 2px; right: 2px; background: rgba(239, 68, 68, 0.85); color: #fff;
@@ -85,9 +84,8 @@
       display: flex; align-items: center; justify-content: center;
     }
 
-    /* Review Feedback Delete Item */
     .review-del-item {
-      background: #faf7fd; border: 1px solid var(--border-purple); border-radius: 14px; padding: 12px; margin-bottom: 8px;
+      background: #fffafa; border: 1px solid var(--border-pink); border-radius: 14px; padding: 12px; margin-bottom: 8px;
       display: flex; justify-content: space-between; align-items: center;
     }
 
@@ -99,7 +97,7 @@
 <div class="container">
   <!-- กล่องล็อกอิน -->
   <div class="card" id="loginBox">
-    <div class="title">🔐 เข้าสู่ระบบแอดมิน (IG Review Pastel)</div>
+    <div class="title">เข้าสู่ระบบแอดมิน</div>
     <div class="field-group">
       <label class="field-label">อีเมลแอดมิน</label>
       <input type="email" id="loginEmail" class="input-box" placeholder="srezinalm@gmail.com">
@@ -108,7 +106,7 @@
       <label class="field-label">รหัสผ่าน</label>
       <input type="password" id="loginPassword" class="input-box" placeholder="กรอกรหัสผ่าน">
     </div>
-    <button type="button" class="btn" onclick="handleLogin()">เข้าสู่ระบบ ♡</button>
+    <button type="button" class="btn" onclick="handleLogin()">เข้าสู่ระบบ</button>
   </div>
 
   <!-- แดชบอร์ดจัดการ -->
@@ -116,103 +114,103 @@
     
     <!-- 1. ข้อมูลส่วนตัว & โปรไฟล์ -->
     <div class="card">
-      <div class="title">👤 ข้อมูลโปรไฟล์ & แบนเนอร์</div>
+      <div class="title">ข้อมูลโปรไฟล์และแบนเนอร์</div>
       <div class="field-group">
-        <label class="field-label">ชื่อหัวเว็บ (Title)</label>
+        <label class="field-label">ชื่อหัวเว็บ</label>
         <input type="text" id="siteTitle" class="input-box">
       </div>
       <div class="field-group">
-        <label class="field-label">Username</label>
+        <label class="field-label">ชื่อผู้ใช้</label>
         <input type="text" id="username" class="input-box">
       </div>
       <div class="field-group">
-        <label class="field-label">Handle (@)</label>
+        <label class="field-label">แฮนเดิล</label>
         <input type="text" id="handle" class="input-box">
       </div>
       <div class="field-group">
-        <label class="field-label">Bio คำอธิบาย</label>
+        <label class="field-label">คำอธิบาย</label>
         <textarea id="bio" class="textarea-box"></textarea>
       </div>
 
       <div class="field-group">
-        <label class="field-label">แบนเนอร์ GIF (บนหัวโปรไฟล์)</label>
-        <label class="file-btn">📁 เลือกรูป/GIF จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'bannerImg')"></label>
-        <input type="text" id="bannerImg" class="input-box" placeholder="หรือวางลิงก์ .gif, .jpg, .png">
+        <label class="field-label">แบนเนอร์ GIF</label>
+        <label class="file-btn">เลือกรูปหรือ GIF จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'bannerImg')"></label>
+        <input type="text" id="bannerImg" class="input-box" placeholder="หรือวางลิงก์รูป">
       </div>
 
       <div class="field-group">
         <label class="field-label">รูปโปรไฟล์</label>
-        <label class="file-btn">📁 เลือกรูปจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'profileImg')"></label>
+        <label class="file-btn">เลือกรูปจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'profileImg')"></label>
         <input type="text" id="profileImg" class="input-box" placeholder="หรือวางลิงก์รูป">
       </div>
 
       <div class="field-group">
-        <label class="field-label">กรอบโปรไฟล์สไตล์ Discord</label>
-        <label class="file-btn">📁 เลือกรูปกรอบจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'discordFrame')"></label>
-        <input type="text" id="discordFrame" class="input-box" placeholder="หรือวางลิงก์กรอบ .png">
+        <label class="field-label">กรอบโปรไฟล์</label>
+        <label class="file-btn">เลือกรูปกรอบจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'discordFrame')"></label>
+        <input type="text" id="discordFrame" class="input-box" placeholder="หรือวางลิงก์กรอบ">
       </div>
     </div>
 
     <!-- 2. จัดการไฮไลท์รีวิว -->
     <div class="card">
-      <div class="title">✨ จัดการ 4 ไฮไลท์สตอรี่ (ลบ/เพิ่ม ได้อิสระ)</div>
+      <div class="title">จัดการไฮไลท์สตอรี่</div>
       <div id="highlightsManager"></div>
-      <button type="button" class="btn-add" onclick="addNewHighlight()">➕ เพิ่มไฮไลท์ใหม่</button>
+      <button type="button" class="btn-add" onclick="addNewHighlight()">เพิ่มไฮไลท์ใหม่</button>
     </div>
 
     <!-- 3. จัดการ 6 โพสต์ -->
     <div class="card">
-      <div class="title">⊞ จัดการ 6 โพสต์หน้า Home</div>
+      <div class="title">จัดการ 6 โพสต์หน้า Home</div>
       <div id="postsManager"></div>
     </div>
 
     <!-- 4. ลบ/จัดการรีวิวลูกค้า -->
     <div class="card">
-      <div class="title">💌 จัดการรีวิวจากลูกค้า (ลบรีวิว)</div>
+      <div class="title">จัดการรีวิวจากลูกค้า</div>
       <div id="customerFeedbackManager"></div>
     </div>
 
     <!-- 5. Details & Contact -->
     <div class="card">
-      <div class="title">📝 Details & Contact</div>
+      <div class="title">รายละเอียดและการติดต่อ</div>
       <div class="field-group">
-        <label class="field-label">เนื้อหาหน้า Details (รายละเอียดบริการ)</label>
+        <label class="field-label">เนื้อหาหน้า Details</label>
         <textarea id="detailsContent" class="textarea-box"></textarea>
       </div>
       <div class="field-group">
-        <label class="field-label">LINE Official / Contact Link</label>
+        <label class="field-label">ลิงก์ช่องทางติดต่อ 1</label>
         <input type="text" id="contactUrl1" class="input-box" placeholder="https://lin.ee/...">
       </div>
       <div class="field-group">
-        <label class="field-label">Google Drive / Portfolio Link</label>
+        <label class="field-label">ลิงก์ผลงานหรือตัวอย่าง 2</label>
         <input type="text" id="contactUrl2" class="input-box" placeholder="https://drive.google.com/...">
       </div>
     </div>
 
     <!-- 6. เพลง & รูปลอย -->
     <div class="card">
-      <div class="title">🎵 เพลง & ลูกเล่น PNG ลอย</div>
+      <div class="title">เพลงและลูกเล่นภาพลอย</div>
       <div class="field-group">
-        <label class="field-label">URL เพลง (.mp3)</label>
+        <label class="field-label">URL เพลง</label>
         <input type="text" id="musicUrl" class="input-box">
       </div>
       <div class="field-group">
-        <label class="field-label">รูปลูกเล่น PNG ลอยไปมา</label>
-        <label class="file-btn">📁 เลือกรูป PNG จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'floatPng')"></label>
+        <label class="field-label">รูปลูกเล่น PNG ลอย</label>
+        <label class="file-btn">เลือกรูป PNG จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'floatPng')"></label>
         <input type="text" id="floatPng" class="input-box">
       </div>
     </div>
 
     <!-- 7. เปลี่ยนรหัสผ่าน -->
     <div class="card">
-      <div class="title">🔑 เปลี่ยนรหัสผ่านแอดมิน</div>
+      <div class="title">เปลี่ยนรหัสผ่านแอดมิน</div>
       <div class="field-group">
         <label class="field-label">รหัสผ่านใหม่</label>
         <input type="password" id="newAdminPassword" class="input-box" placeholder="ปล่อยว่างหากไม่เปลี่ยน">
       </div>
     </div>
 
-    <button type="button" class="btn" id="saveBtn" onclick="saveAllConfig()">☁ บันทึกขึ้นระบบทันที ♡</button>
+    <button type="button" class="btn" id="saveBtn" onclick="saveAllConfig()">บันทึกขึ้นระบบทันที</button>
     <button type="button" class="btn btn-secondary" onclick="logout()">ออกจากระบบ</button>
   </div>
 </div>
@@ -259,7 +257,7 @@
       loadData();
       listenCustomerFeedbacks();
     } else {
-      alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง!");
+      alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
     }
   }
 
@@ -293,7 +291,7 @@
       document.getElementById("siteTitle").value = d.siteTitle || "selris.store";
       document.getElementById("username").value = d.username || "selris.store";
       document.getElementById("handle").value = d.handle || "@luvselris";
-      document.getElementById("bio").value = d.bio || "welcome to luvselris ♡ \nดูรีวิวกันก่อนได้นะคะ ตัวอย่างงานเว็บ งานป้าย คอนแทค 🪽";
+      document.getElementById("bio").value = d.bio || "welcome to luvselris\nดูรีวิวกันก่อนได้นะคะ ตัวอย่างงานเว็บ งานป้าย คอนแทค";
       document.getElementById("bannerImg").value = d.bannerImg || "https://c.tenor.com/qvn5EduVCSDAAAAC/tenor.gif";
       document.getElementById("profileImg").value = d.profileImg || "https://i.ibb.co/mCZ2x6pK/IMG-3558.jpg";
       document.getElementById("discordFrame").value = d.discordFrame || "https://i.ibb.co/nqR30Rcw/IMG-3563.png";
@@ -322,21 +320,21 @@
       wrap.innerHTML = `
         <div class="hl-header-bar">
           <span class="hl-tag">ไฮไลท์สตอรี่ที่ ${idx+1}</span>
-          <button type="button" class="hl-delete-btn" onclick="deleteEntireHighlight(${idx})">🗑️ ลบไฮไลท์นี้</button>
+          <button type="button" class="hl-delete-btn" onclick="deleteEntireHighlight(${idx})">ลบไฮไลท์นี้</button>
         </div>
         <div class="field-group">
           <label class="field-label">ชื่อไฮไลท์</label>
           <input type="text" class="input-box" value="${hl.title || ''}" oninput="highlightsData[${idx}].title = this.value">
         </div>
         <div class="field-group">
-          <label class="field-label">รูปหน้าปกไฮไลท์ (ลิงก์/อัปโหลด)</label>
+          <label class="field-label">รูปหน้าปกไฮไลท์</label>
           <input type="text" class="input-box" id="hl-cover-${idx}" value="${hl.cover || ''}" placeholder="URL หน้าปก" oninput="highlightsData[${idx}].cover = this.value">
         </div>
         <label class="file-btn">
-          ➕ อัปโหลดรูปเพิ่มเข้าสตอรี่นี้ (จากโทรศัพท์)
+          อัปโหลดรูปเพิ่มเข้าสตอรี่นี้
           <input type="file" accept="image/*" multiple style="display:none;" onchange="uploadStoryImages(event, ${idx})">
         </label>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ (กดกากบาทบนรูปเพื่อลบ)</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ</div>
         <div class="hl-gallery" id="hl-gal-${idx}"></div>
       `;
       box.appendChild(wrap);
@@ -348,7 +346,7 @@
           item.className = "hl-img-wrap";
           item.innerHTML = `
             <img src="${imgUrl}">
-            <button type="button" class="hl-img-del" title="ลบภาพนี้" onclick="removeStoryImage(${idx}, ${imgIdx})">✕</button>
+            <button type="button" class="hl-img-del" onclick="removeStoryImage(${idx}, ${imgIdx})">×</button>
           `;
           gal.appendChild(item);
         });
@@ -379,7 +377,7 @@
     
     files.forEach(file => {
       if (highlightsData[hlIndex].images.length >= 25) {
-        alert("ไฮไลท์นี้ครบ 25 ภาพแล้วค่ะ!");
+        alert("ไฮไลท์นี้ครบ 25 ภาพแล้ว");
         return;
       }
       const reader = new FileReader();
@@ -418,7 +416,7 @@
       wrap.className = "hl-edit-box";
       wrap.innerHTML = `
         <label class="field-label">โพสต์ที่ ${idx+1}</label>
-        <label class="file-btn">📁 เลือกรูปโพสต์จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectPost(event, ${idx})"></label>
+        <label class="file-btn">เลือกรูปโพสต์จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectPost(event, ${idx})"></label>
         <input type="text" class="input-box" id="post-img-${idx}" value="${p.image || ''}" placeholder="หรือวางลิงก์รูป" oninput="postsData[${idx}].image = this.value" style="margin-bottom:6px;">
         <input type="text" class="input-box" value="${p.caption || ''}" placeholder="แคปชันโพสต์" oninput="postsData[${idx}].caption = this.value">
       `;
@@ -457,7 +455,7 @@
       const box = document.getElementById("customerFeedbackManager");
       box.innerHTML = "";
       if (snap.empty) {
-        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:10px;">ยังไม่มีรีวิวส่งเข้ามาค่ะ</div>`;
+        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:10px;">ยังไม่มีรีวิวส่งเข้ามา</div>`;
         return;
       }
       snap.forEach(doc => {
@@ -466,7 +464,7 @@
         item.className = "review-del-item";
         item.innerHTML = `
           <div>
-            <div style="font-weight:700; font-size:13px;">${d.name} (${'⭐'.repeat(d.stars || 5)})</div>
+            <div style="font-weight:700; font-size:13px;">${d.name} (${'★'.repeat(d.stars || 5)})</div>
             <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${d.msg}</div>
           </div>
           <button type="button" class="hl-delete-btn" onclick="deleteCustomerFeedback('${doc.id}')">ลบ</button>
@@ -500,8 +498,8 @@
 
       details: document.getElementById("detailsContent").value.trim(),
       contacts: [
-        { title: "LINE Official", url: document.getElementById("contactUrl1").value.trim(), icon: "💬" },
-        { title: "Google Drive / Examples", url: document.getElementById("contactUrl2").value.trim(), icon: "📁" }
+        { title: "LINE Official", url: document.getElementById("contactUrl1").value.trim() },
+        { title: "Google Drive / Examples", url: document.getElementById("contactUrl2").value.trim() }
       ],
 
       musicUrl: document.getElementById("musicUrl").value.trim(),
@@ -517,12 +515,12 @@
 
     try {
       await db.collection("ig_review_pastel_site").doc("config").set(payload, { merge: true });
-      alert("บันทึกข้อมูลสำเร็จแล้วค่ะ! หน้าเว็บจะเปลี่ยนทันที");
+      alert("บันทึกข้อมูลสำเร็จแล้ว หน้าเว็บจะเปลี่ยนทันที");
       document.getElementById("newAdminPassword").value = "";
     } catch (err) {
       alert("เกิดข้อผิดพลาด: " + err.message);
     } finally {
-      btn.disabled = false; btn.textContent = "☁ บันทึกขึ้นระบบทันที ♡";
+      btn.disabled = false; btn.textContent = "บันทึกขึ้นระบบทันที";
     }
   }
 
