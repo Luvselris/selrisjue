@@ -13,61 +13,63 @@
 
   <style>
     :root {
-      --primary: #a855f7;
-      --bg: #faf5ff;
-      --card: #ffffff;
-      --card-sub: #f3e8ff;
-      --border: #e9d5ff;
-      --text: #3b2d54;
-      --text-muted: #7e6b94;
+      --bg-pastel: #faf7fd;
+      --card-bg: #ffffff;
+      --card-sub: #f6f0fe;
+      --purple-main: #9b72cf;
+      --purple-soft: #c4a7e7;
+      --purple-light: #f1e8fc;
+      --border-purple: #e8dcfa;
+      --text-main: #4a3e5c;
+      --text-muted: #8c7d9e;
       --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; }
-    body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
+    body { background: var(--bg-pastel); color: var(--text-main); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
     .container { width: 100%; max-width: 480px; }
     
     .card {
-      background: var(--card); border-radius: 24px; padding: 20px 18px;
-      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.12); border: 1.5px solid var(--border); margin-bottom: 16px;
+      background: var(--card-bg); border-radius: 24px; padding: 20px 18px;
+      box-shadow: 0 8px 25px rgba(155, 114, 207, 0.12); border: 1.5px solid var(--border-purple); margin-bottom: 16px;
     }
-    .title { font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 16px; }
+    .title { font-size: 18px; font-weight: 700; color: var(--purple-main); text-align: center; margin-bottom: 16px; }
     .field-group { margin-bottom: 14px; }
-    .field-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; display: block; }
+    .field-label { font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; display: block; }
     .input-box, .textarea-box {
-      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--border);
-      outline: none; font-size: 13.5px; background: #fff; color: var(--text); transition: all 0.2s;
+      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--border-purple);
+      outline: none; font-size: 13.5px; background: #fff; color: var(--text-main); transition: all 0.2s;
     }
-    .input-box:focus, .textarea-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2); }
+    .input-box:focus, .textarea-box:focus { border-color: var(--purple-main); box-shadow: 0 0 0 3px rgba(155, 114, 207, 0.18); }
     .textarea-box { resize: vertical; min-height: 80px; line-height: 1.5; }
 
     .file-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 9px 14px; background: #f3e8ff; border: 1.5px dashed var(--primary);
-      border-radius: 14px; color: var(--primary); font-size: 12.5px; font-weight: 600;
+      padding: 9px 14px; background: var(--purple-light); border: 1.5px dashed var(--purple-main);
+      border-radius: 14px; color: var(--purple-main); font-size: 12.5px; font-weight: 600;
       cursor: pointer; width: 100%; margin-bottom: 6px;
     }
 
     .btn {
       width: 100%; padding: 12px; border-radius: 18px; border: none; font-size: 14.5px; font-weight: 600;
-      cursor: pointer; background: linear-gradient(135deg, #c084fc, var(--primary)); color: #fff; margin-top: 6px;
-      box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
+      cursor: pointer; background: linear-gradient(135deg, var(--purple-soft), var(--purple-main)); color: #fff; margin-top: 6px;
+      box-shadow: 0 6px 16px rgba(155, 114, 207, 0.28);
     }
-    .btn-secondary { background: #fff; color: var(--primary); border: 1.5px solid var(--border); margin-top: 10px; box-shadow: none; }
+    .btn-secondary { background: #fff; color: var(--purple-main); border: 1.5px solid var(--border-purple); margin-top: 10px; box-shadow: none; }
     
     .btn-add {
-      background: #f3e8ff; color: var(--primary); border: 1.5px dashed var(--primary);
+      background: var(--purple-light); color: var(--purple-main); border: 1.5px dashed var(--purple-main);
       font-size: 13px; padding: 10px; border-radius: 14px; margin-top: 8px; width: 100%; cursor: pointer; font-weight: 600;
     }
 
-    /* Highlight Editor Card */
+    /* Highlight Editor */
     .hl-edit-box {
-      background: #faf5ff; border: 1.5px solid var(--border); border-radius: 18px;
+      background: #faf7fd; border: 1.5px solid var(--border-purple); border-radius: 18px;
       padding: 14px; margin-bottom: 14px; position: relative;
     }
     .hl-header-bar {
       display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
     }
-    .hl-tag { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .hl-tag { font-size: 13px; font-weight: 700; color: var(--purple-main); }
     .hl-delete-btn {
       background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5;
       padding: 4px 10px; border-radius: 10px; font-size: 11.5px; font-weight: 600; cursor: pointer;
@@ -75,7 +77,7 @@
     .hl-gallery {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
     }
-    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #e9d5ff; }
+    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: var(--purple-light); }
     .hl-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .hl-img-del {
       position: absolute; top: 2px; right: 2px; background: rgba(239, 68, 68, 0.85); color: #fff;
@@ -83,9 +85,9 @@
       display: flex; align-items: center; justify-content: center;
     }
 
-    /* กล่องจัดการรีวิวของลูกค้า */
+    /* Review Feedback Delete Item */
     .review-del-item {
-      background: #faf5ff; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 8px;
+      background: #faf7fd; border: 1px solid var(--border-purple); border-radius: 14px; padding: 12px; margin-bottom: 8px;
       display: flex; justify-content: space-between; align-items: center;
     }
 
@@ -95,7 +97,7 @@
 <body>
 
 <div class="container">
-  <!-- ล็อกอิน -->
+  <!-- กล่องล็อกอิน -->
   <div class="card" id="loginBox">
     <div class="title">🔐 เข้าสู่ระบบแอดมิน (IG Review Pastel)</div>
     <div class="field-group">
@@ -112,7 +114,7 @@
   <!-- แดชบอร์ดจัดการ -->
   <div id="dashboardBox" class="hidden">
     
-    <!-- 1. โปรไฟล์ & แบนเนอร์ -->
+    <!-- 1. ข้อมูลส่วนตัว & โปรไฟล์ -->
     <div class="card">
       <div class="title">👤 ข้อมูลโปรไฟล์ & แบนเนอร์</div>
       <div class="field-group">
@@ -151,22 +153,22 @@
       </div>
     </div>
 
-    <!-- 2. จัดการ 4 ไฮไลท์สตอรี่ (ใส่ภาพได้ 25 ภาพ/อัน) -->
+    <!-- 2. จัดการไฮไลท์รีวิว -->
     <div class="card">
       <div class="title">✨ จัดการ 4 ไฮไลท์สตอรี่ (ลบ/เพิ่ม ได้อิสระ)</div>
       <div id="highlightsManager"></div>
       <button type="button" class="btn-add" onclick="addNewHighlight()">➕ เพิ่มไฮไลท์ใหม่</button>
     </div>
 
-    <!-- 3. จัดการโพสต์ 6 ช่อง -->
+    <!-- 3. จัดการ 6 โพสต์ -->
     <div class="card">
       <div class="title">⊞ จัดการ 6 โพสต์หน้า Home</div>
       <div id="postsManager"></div>
     </div>
 
-    <!-- 4. ลบ/จัดการรีวิวที่ลูกค้าส่งเข้ามา -->
+    <!-- 4. ลบ/จัดการรีวิวลูกค้า -->
     <div class="card">
-      <div class="title">💌 จัดการรีวิวจากลูกค้า (ลบรีวิวที่ไม่ต้องการ)</div>
+      <div class="title">💌 จัดการรีวิวจากลูกค้า (ลบรีวิว)</div>
       <div id="customerFeedbackManager"></div>
     </div>
 
@@ -187,7 +189,7 @@
       </div>
     </div>
 
-    <!-- 6. เพลงและลูกเล่น PNG ลอย -->
+    <!-- 6. เพลง & รูปลอย -->
     <div class="card">
       <div class="title">🎵 เพลง & ลูกเล่น PNG ลอย</div>
       <div class="field-group">
@@ -450,7 +452,6 @@
     reader.readAsDataURL(file);
   }
 
-  // จัดการและลบรีวิวที่ลูกค้าส่งเข้ามา
   function listenCustomerFeedbacks() {
     db.collection("ig_review_feedback").orderBy("createdAt", "desc").onSnapshot(snap => {
       const box = document.getElementById("customerFeedbackManager");
