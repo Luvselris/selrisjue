@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Admin Dashboard ♡ IG Review</title>
+  <title>Admin Dashboard ♡ IG Review Pastel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,13 +13,13 @@
 
   <style>
     :root {
-      --primary: #c084fc;
-      --bg: #0f0c15;
-      --card: #191424;
-      --card-sub: #221b33;
-      --border: rgba(192, 132, 252, 0.3);
-      --text: #f3e8ff;
-      --text-muted: #a89bb9;
+      --primary: #a855f7;
+      --bg: #faf5ff;
+      --card: #ffffff;
+      --card-sub: #f3e8ff;
+      --border: #e9d5ff;
+      --text: #3b2d54;
+      --text-muted: #7e6b94;
       --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; }
@@ -28,39 +28,40 @@
     
     .card {
       background: var(--card); border-radius: 24px; padding: 20px 18px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid var(--border); margin-bottom: 16px;
+      box-shadow: 0 8px 25px rgba(168, 85, 247, 0.12); border: 1.5px solid var(--border); margin-bottom: 16px;
     }
     .title { font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 16px; }
     .field-group { margin-bottom: 14px; }
     .field-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; display: block; }
     .input-box, .textarea-box {
-      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1px solid var(--border);
-      outline: none; font-size: 13.5px; background: var(--card-sub); color: #fff; transition: all 0.2s;
+      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1.5px solid var(--border);
+      outline: none; font-size: 13.5px; background: #fff; color: var(--text); transition: all 0.2s;
     }
-    .input-box:focus, .textarea-box:focus { border-color: var(--primary); }
+    .input-box:focus, .textarea-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2); }
     .textarea-box { resize: vertical; min-height: 80px; line-height: 1.5; }
 
     .file-btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 9px 14px; background: rgba(192, 132, 252, 0.15); border: 1.5px dashed var(--primary);
+      padding: 9px 14px; background: #f3e8ff; border: 1.5px dashed var(--primary);
       border-radius: 14px; color: var(--primary); font-size: 12.5px; font-weight: 600;
       cursor: pointer; width: 100%; margin-bottom: 6px;
     }
 
     .btn {
       width: 100%; padding: 12px; border-radius: 18px; border: none; font-size: 14.5px; font-weight: 600;
-      cursor: pointer; background: linear-gradient(135deg, #c084fc, #7e22ce); color: #fff; margin-top: 6px;
+      cursor: pointer; background: linear-gradient(135deg, #c084fc, var(--primary)); color: #fff; margin-top: 6px;
+      box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
     }
-    .btn-secondary { background: var(--card-sub); color: var(--primary); border: 1px solid var(--border); margin-top: 10px; }
+    .btn-secondary { background: #fff; color: var(--primary); border: 1.5px solid var(--border); margin-top: 10px; box-shadow: none; }
     
     .btn-add {
-      background: rgba(192, 132, 252, 0.15); color: var(--primary); border: 1.5px dashed var(--primary);
-      font-size: 13px; padding: 10px; border-radius: 14px; margin-top: 8px; width: 100%; cursor: pointer;
+      background: #f3e8ff; color: var(--primary); border: 1.5px dashed var(--primary);
+      font-size: 13px; padding: 10px; border-radius: 14px; margin-top: 8px; width: 100%; cursor: pointer; font-weight: 600;
     }
 
     /* Highlight Editor Card */
     .hl-edit-box {
-      background: var(--card-sub); border: 1px solid var(--border); border-radius: 16px;
+      background: #faf5ff; border: 1.5px solid var(--border); border-radius: 18px;
       padding: 14px; margin-bottom: 14px; position: relative;
     }
     .hl-header-bar {
@@ -68,18 +69,24 @@
     }
     .hl-tag { font-size: 13px; font-weight: 700; color: var(--primary); }
     .hl-delete-btn {
-      background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger);
+      background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5;
       padding: 4px 10px; border-radius: 10px; font-size: 11.5px; font-weight: 600; cursor: pointer;
     }
     .hl-gallery {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
     }
-    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #000; }
+    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #e9d5ff; }
     .hl-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
     .hl-img-del {
       position: absolute; top: 2px; right: 2px; background: rgba(239, 68, 68, 0.85); color: #fff;
       border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
+    }
+
+    /* กล่องจัดการรีวิวของลูกค้า */
+    .review-del-item {
+      background: #faf5ff; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
     .hidden { display: none !important; }
@@ -88,9 +95,9 @@
 <body>
 
 <div class="container">
-  <!-- กล่องล็อกอิน -->
+  <!-- ล็อกอิน -->
   <div class="card" id="loginBox">
-    <div class="title">🔐 เข้าสู่ระบบแอดมิน (IG Review)</div>
+    <div class="title">🔐 เข้าสู่ระบบแอดมิน (IG Review Pastel)</div>
     <div class="field-group">
       <label class="field-label">อีเมลแอดมิน</label>
       <input type="email" id="loginEmail" class="input-box" placeholder="srezinalm@gmail.com">
@@ -105,9 +112,9 @@
   <!-- แดชบอร์ดจัดการ -->
   <div id="dashboardBox" class="hidden">
     
-    <!-- 1. ข้อมูลส่วนตัว & โปรไฟล์ -->
+    <!-- 1. โปรไฟล์ & แบนเนอร์ -->
     <div class="card">
-      <div class="title">👤 โปรไฟล์ & แบนเนอร์</div>
+      <div class="title">👤 ข้อมูลโปรไฟล์ & แบนเนอร์</div>
       <div class="field-group">
         <label class="field-label">ชื่อหัวเว็บ (Title)</label>
         <input type="text" id="siteTitle" class="input-box">
@@ -128,7 +135,7 @@
       <div class="field-group">
         <label class="field-label">แบนเนอร์ GIF (บนหัวโปรไฟล์)</label>
         <label class="file-btn">📁 เลือกรูป/GIF จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'bannerImg')"></label>
-        <input type="text" id="bannerImg" class="input-box" placeholder="หรือวางลิงก์รูป .gif, .jpg, .png">
+        <input type="text" id="bannerImg" class="input-box" placeholder="หรือวางลิงก์ .gif, .jpg, .png">
       </div>
 
       <div class="field-group">
@@ -144,24 +151,30 @@
       </div>
     </div>
 
-    <!-- 2. จัดการไฮไลท์รีวิว (เพิ่ม-ลบไฮไลท์ และ ลบรูปรีวิวรายภาพ) -->
+    <!-- 2. จัดการ 4 ไฮไลท์สตอรี่ (ใส่ภาพได้ 25 ภาพ/อัน) -->
     <div class="card">
-      <div class="title">✨ จัดการไฮไลท์รีวิว (ลบ/เพิ่ม ได้อิสระ)</div>
+      <div class="title">✨ จัดการ 4 ไฮไลท์สตอรี่ (ลบ/เพิ่ม ได้อิสระ)</div>
       <div id="highlightsManager"></div>
-      <button type="button" class="btn-add" onclick="addNewHighlight()">➕ เพิ่มไฮไลท์รีวิวใหม่</button>
+      <button type="button" class="btn-add" onclick="addNewHighlight()">➕ เพิ่มไฮไลท์ใหม่</button>
     </div>
 
-    <!-- 3. จัดการโพสต์ 6 โพสต์ -->
+    <!-- 3. จัดการโพสต์ 6 ช่อง -->
     <div class="card">
       <div class="title">⊞ จัดการ 6 โพสต์หน้า Home</div>
       <div id="postsManager"></div>
     </div>
 
-    <!-- 4. รายละเอียด & คอนแทค -->
+    <!-- 4. ลบ/จัดการรีวิวที่ลูกค้าส่งเข้ามา -->
+    <div class="card">
+      <div class="title">💌 จัดการรีวิวจากลูกค้า (ลบรีวิวที่ไม่ต้องการ)</div>
+      <div id="customerFeedbackManager"></div>
+    </div>
+
+    <!-- 5. Details & Contact -->
     <div class="card">
       <div class="title">📝 Details & Contact</div>
       <div class="field-group">
-        <label class="field-label">เนื้อหาหน้า Details (ตัวอย่างงาน/บริการ)</label>
+        <label class="field-label">เนื้อหาหน้า Details (รายละเอียดบริการ)</label>
         <textarea id="detailsContent" class="textarea-box"></textarea>
       </div>
       <div class="field-group">
@@ -174,21 +187,21 @@
       </div>
     </div>
 
-    <!-- 5. เพลงและลูกเล่น PNG ลอย -->
+    <!-- 6. เพลงและลูกเล่น PNG ลอย -->
     <div class="card">
-      <div class="title">🎵 เพลง & ลูกเล่น PNG</div>
+      <div class="title">🎵 เพลง & ลูกเล่น PNG ลอย</div>
       <div class="field-group">
         <label class="field-label">URL เพลง (.mp3)</label>
         <input type="text" id="musicUrl" class="input-box">
       </div>
       <div class="field-group">
         <label class="field-label">รูปลูกเล่น PNG ลอยไปมา</label>
-        <label class="file-btn">📁 เลือกรูป PNG จากเครื่อง <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'floatPng')"></label>
+        <label class="file-btn">📁 เลือกรูป PNG จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'floatPng')"></label>
         <input type="text" id="floatPng" class="input-box">
       </div>
     </div>
 
-    <!-- 6. เปลี่ยนรหัสผ่าน -->
+    <!-- 7. เปลี่ยนรหัสผ่าน -->
     <div class="card">
       <div class="title">🔑 เปลี่ยนรหัสผ่านแอดมิน</div>
       <div class="field-group">
@@ -227,7 +240,7 @@
 
   let postsData = Array(6).fill().map((_, i) => ({ image: "", caption: `Post ${i+1}` }));
 
-  db.collection("ig_review_site").doc("config").onSnapshot(doc => {
+  db.collection("ig_review_pastel_site").doc("config").onSnapshot(doc => {
     if (doc.exists) {
       const d = doc.data();
       if (d.adminEmail) currentAdminEmail = d.adminEmail;
@@ -242,6 +255,7 @@
       document.getElementById("loginBox").classList.add("hidden");
       document.getElementById("dashboardBox").classList.remove("hidden");
       loadData();
+      listenCustomerFeedbacks();
     } else {
       alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง!");
     }
@@ -272,7 +286,7 @@
   }
 
   function loadData() {
-    db.collection("ig_review_site").doc("config").get().then(doc => {
+    db.collection("ig_review_pastel_site").doc("config").get().then(doc => {
       const d = doc.exists ? doc.data() : {};
       document.getElementById("siteTitle").value = d.siteTitle || "selris.store";
       document.getElementById("username").value = d.username || "selris.store";
@@ -297,7 +311,6 @@
     });
   }
 
-  // เรนเดอร์ตัวจัดการไฮไลท์ พร้อมปุ่ม "ลบไฮไลท์ทั้งก้อน" และ "ลบรูปในไฮไลท์ทีละรูป"
   function renderHighlightManagers() {
     const box = document.getElementById("highlightsManager");
     box.innerHTML = "";
@@ -306,11 +319,11 @@
       wrap.className = "hl-edit-box";
       wrap.innerHTML = `
         <div class="hl-header-bar">
-          <span class="hl-tag">ไฮไลท์รีวิวที่ ${idx+1}</span>
+          <span class="hl-tag">ไฮไลท์สตอรี่ที่ ${idx+1}</span>
           <button type="button" class="hl-delete-btn" onclick="deleteEntireHighlight(${idx})">🗑️ ลบไฮไลท์นี้</button>
         </div>
         <div class="field-group">
-          <label class="field-label">ชื่อหัวข้อไฮไลท์</label>
+          <label class="field-label">ชื่อไฮไลท์</label>
           <input type="text" class="input-box" value="${hl.title || ''}" oninput="highlightsData[${idx}].title = this.value">
         </div>
         <div class="field-group">
@@ -318,10 +331,10 @@
           <input type="text" class="input-box" id="hl-cover-${idx}" value="${hl.cover || ''}" placeholder="URL หน้าปก" oninput="highlightsData[${idx}].cover = this.value">
         </div>
         <label class="file-btn">
-          ➕ อัปโหลดรูปเพิ่มเข้าสตอรี่นี้ (จากมือถือ)
+          ➕ อัปโหลดรูปเพิ่มเข้าสตอรี่นี้ (จากโทรศัพท์)
           <input type="file" accept="image/*" multiple style="display:none;" onchange="uploadStoryImages(event, ${idx})">
         </label>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ (กดกากบาทสีแดงบนรูปเพื่อลบ)</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ (กดกากบาทบนรูปเพื่อลบ)</div>
         <div class="hl-gallery" id="hl-gal-${idx}"></div>
       `;
       box.appendChild(wrap);
@@ -341,15 +354,13 @@
     });
   }
 
-  // ลบไฮไลท์ทั้งก้อน
   function deleteEntireHighlight(index) {
-    if (confirm(`ต้องการลบไฮไลท์ "${highlightsData[index].title || 'รีวิว'}" นี้ทิ้งใช่ไหมคะ?`)) {
+    if (confirm(`ต้องการลบไฮไลท์ "${highlightsData[index].title || 'รีวิว'}" นี้ใช่ไหมคะ?`)) {
       highlightsData.splice(index, 1);
       renderHighlightManagers();
     }
   }
 
-  // เพิ่มไฮไลท์ใหม่
   function addNewHighlight() {
     highlightsData.push({
       title: `Review ${highlightsData.length + 1}`,
@@ -392,7 +403,6 @@
     });
   }
 
-  // ลบรูปเดี่ยวในสตอรี่
   function removeStoryImage(hlIndex, imgIndex) {
     highlightsData[hlIndex].images.splice(imgIndex, 1);
     renderHighlightManagers();
@@ -406,7 +416,7 @@
       wrap.className = "hl-edit-box";
       wrap.innerHTML = `
         <label class="field-label">โพสต์ที่ ${idx+1}</label>
-        <label class="file-btn">📁 เลือกรูปภาพโพสต์จากเครื่อง <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectPost(event, ${idx})"></label>
+        <label class="file-btn">📁 เลือกรูปโพสต์จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectPost(event, ${idx})"></label>
         <input type="text" class="input-box" id="post-img-${idx}" value="${p.image || ''}" placeholder="หรือวางลิงก์รูป" oninput="postsData[${idx}].image = this.value" style="margin-bottom:6px;">
         <input type="text" class="input-box" value="${p.caption || ''}" placeholder="แคปชันโพสต์" oninput="postsData[${idx}].caption = this.value">
       `;
@@ -438,6 +448,37 @@
       img.src = e.target.result;
     };
     reader.readAsDataURL(file);
+  }
+
+  // จัดการและลบรีวิวที่ลูกค้าส่งเข้ามา
+  function listenCustomerFeedbacks() {
+    db.collection("ig_review_feedback").orderBy("createdAt", "desc").onSnapshot(snap => {
+      const box = document.getElementById("customerFeedbackManager");
+      box.innerHTML = "";
+      if (snap.empty) {
+        box.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:10px;">ยังไม่มีรีวิวส่งเข้ามาค่ะ</div>`;
+        return;
+      }
+      snap.forEach(doc => {
+        const d = doc.data();
+        const item = document.createElement("div");
+        item.className = "review-del-item";
+        item.innerHTML = `
+          <div>
+            <div style="font-weight:700; font-size:13px;">${d.name} (${'⭐'.repeat(d.stars || 5)})</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${d.msg}</div>
+          </div>
+          <button type="button" class="hl-delete-btn" onclick="deleteCustomerFeedback('${doc.id}')">ลบ</button>
+        `;
+        box.appendChild(item);
+      });
+    });
+  }
+
+  async function deleteCustomerFeedback(docId) {
+    if (confirm("ต้องการลบรีวิวนี้ใช่ไหมคะ?")) {
+      await db.collection("ig_review_feedback").doc(docId).delete();
+    }
   }
 
   async function saveAllConfig() {
@@ -474,7 +515,7 @@
     }
 
     try {
-      await db.collection("ig_review_site").doc("config").set(payload, { merge: true });
+      await db.collection("ig_review_pastel_site").doc("config").set(payload, { merge: true });
       alert("บันทึกข้อมูลสำเร็จแล้วค่ะ! หน้าเว็บจะเปลี่ยนทันที");
       document.getElementById("newAdminPassword").value = "";
     } catch (err) {
