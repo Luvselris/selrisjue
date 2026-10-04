@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Admin Dashboard ♡ IG Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --primary: #c084fc;
+      --bg: #0f0c15;
+      --card: #191424;
+      --card-sub: #221b33;
+      --border: rgba(192, 132, 252, 0.3);
+      --text: #f3e8ff;
+      --text-muted: #a89bb9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', 'Mitr', sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px 14px 60px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 480px; }
+    
+    .card {
+      background: var(--card); border-radius: 24px; padding: 20px 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid var(--border); margin-bottom: 16px;
+    }
+    .title { font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 16px; }
+    .field-group { margin-bottom: 14px; }
+    .field-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; display: block; }
+    .input-box, .textarea-box {
+      width: 100%; padding: 11px 14px; border-radius: 14px; border: 1px solid var(--border);
+      outline: none; font-size: 13.5px; background: var(--card-sub); color: #fff; transition: all 0.2s;
+    }
+    .input-box:focus, .textarea-box:focus { border-color: var(--primary); }
+    .textarea-box { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+    .file-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 14px; background: rgba(192, 132, 252, 0.15); border: 1.5px dashed var(--primary);
+      border-radius: 14px; color: var(--primary); font-size: 12.5px; font-weight: 600;
+      cursor: pointer; width: 100%; margin-bottom: 6px;
+    }
+
+    .btn {
+      width: 100%; padding: 12px; border-radius: 18px; border: none; font-size: 14.5px; font-weight: 600;
+      cursor: pointer; background: linear-gradient(135deg, #c084fc, #7e22ce); color: #fff; margin-top: 6px;
+    }
+    .btn-secondary { background: var(--card-sub); color: var(--primary); border: 1px solid var(--border); margin-top: 10px; }
+    
+    /* Highlight Editor Card */
+    .hl-edit-box {
+      background: var(--card-sub); border: 1px solid var(--border); border-radius: 16px;
+      padding: 14px; margin-bottom: 12px;
+    }
+    .hl-gallery {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px;
+    }
+    .hl-img-wrap { position: relative; aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: #000; }
+    .hl-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .hl-img-del {
+      position: absolute; top: 2px; right: 2px; background: rgba(220, 38, 38, 0.85); color: #fff;
+      border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; cursor: pointer;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- กล่องล็อกอิน -->
+  <div class="card" id="loginBox">
+    <div class="title">🔐 เข้าสู่ระบบแอดมิน (IG Review)</div>
+    <div class="field-group">
+      <label class="field-label">อีเมลแอดมิน</label>
+      <input type="email" id="loginEmail" class="input-box" placeholder="srezinalm@gmail.com">
+    </div>
+    <div class="field-group">
+      <label class="field-label">รหัสผ่าน</label>
+      <input type="password" id="loginPassword" class="input-box" placeholder="กรอกรหัสผ่าน">
+    </div>
+    <button type="button" class="btn" onclick="handleLogin()">เข้าสู่ระบบ ♡</button>
+  </div>
+
+  <!-- แดชบอร์ดจัดการ -->
+  <div id="dashboardBox" class="hidden">
+    
+    <!-- 1. ข้อมูลส่วนตัว & โปรไฟล์ -->
+    <div class="card">
+      <div class="title">👤 โปรไฟล์ & แบนเนอร์</div>
+      <div class="field-group">
+        <label class="field-label">ชื่อหัวเว็บ (Title)</label>
+        <input type="text" id="siteTitle" class="input-box">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Username</label>
+        <input type="text" id="username" class="input-box">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Handle (@)</label>
+        <input type="text" id="handle" class="input-box">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Bio คำอธิบาย</label>
+        <textarea id="bio" class="textarea-box"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">แบนเนอร์ GIF (บนหัวโปรไฟล์)</label>
+        <label class="file-btn">📁 เลือกรูป/GIF จากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'bannerImg')"></label>
+        <input type="text" id="bannerImg" class="input-box" placeholder="หรือวางลิงก์รูป .gif, .jpg, .png">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">รูปโปรไฟล์</label>
+        <label class="file-btn">📁 เลือกรูปจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'profileImg')"></label>
+        <input type="text" id="profileImg" class="input-box" placeholder="หรือวางลิงก์รูป">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">กรอบโปรไฟล์สไตล์ Discord</label>
+        <label class="file-btn">📁 เลือกรูปกรอบจากโทรศัพท์ <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'discordFrame')"></label>
+        <input type="text" id="discordFrame" class="input-box" placeholder="หรือวางลิงก์กรอบ .png">
+      </div>
+    </div>
+
+    <!-- 2. จัดการ 4 ไฮไลท์สตอรี่ (ใส่ภาพได้ 25 ภาพ/ไฮไลท์) -->
+    <div class="card">
+      <div class="title">✨ จัดการ 4 ไฮไลท์สตอรี่ (สูงสุด 25 ภาพ/อัน)</div>
+      <div id="highlightsManager"></div>
+    </div>
+
+    <!-- 3. จัดการโพสต์ 6 โพสต์ -->
+    <div class="card">
+      <div class="title">⊞ จัดการ 6 โพสต์หน้า Home</div>
+      <div id="postsManager"></div>
+    </div>
+
+    <!-- 4. รายละเอียด & คอนแทค -->
+    <div class="card">
+      <div class="title">📝 Details & Contact</div>
+      <div class="field-group">
+        <label class="field-label">เนื้อหาหน้า Details (ตัวอย่างงาน/บริการ)</label>
+        <textarea id="detailsContent" class="textarea-box"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">LINE Official / Contact Link</label>
+        <input type="text" id="contactUrl1" class="input-box" placeholder="https://lin.ee/...">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Google Drive / Portfolio Link</label>
+        <input type="text" id="contactUrl2" class="input-box" placeholder="https://drive.google.com/...">
+      </div>
+    </div>
+
+    <!-- 5. เพลงและลูกเล่น PNG ลอย -->
+    <div class="card">
+      <div class="title">🎵 เพลง & ลูกเล่น PNG</div>
+      <div class="field-group">
+        <label class="field-label">URL เพลง (.mp3)</label>
+        <input type="text" id="musicUrl" class="input-box">
+      </div>
+      <div class="field-group">
+        <label class="field-label">รูปลูกเล่น PNG ลอยไปมา</label>
+        <label class="file-btn">📁 เลือกรูป PNG จากเครื่อง <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectImage(event, 'floatPng')"></label>
+        <input type="text" id="floatPng" class="input-box">
+      </div>
+    </div>
+
+    <!-- 6. เปลี่ยนรหัสผ่าน -->
+    <div class="card">
+      <div class="title">🔑 เปลี่ยนรหัสผ่านแอดมิน</div>
+      <div class="field-group">
+        <label class="field-label">รหัสผ่านใหม่</label>
+        <input type="password" id="newAdminPassword" class="input-box" placeholder="ปล่อยว่างหากไม่เปลี่ยน">
+      </div>
+    </div>
+
+    <button type="button" class="btn" id="saveBtn" onclick="saveAllConfig()">☁ บันทึกขึ้นระบบทันที ♡</button>
+    <button type="button" class="btn btn-secondary" onclick="logout()">ออกจากระบบ</button>
+  </div>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpAGDSy1NRgmLV_g7qJrCpwOhU9MrfQyY",
+    authDomain: "benefitie.firebaseapp.com",
+    projectId: "benefitie",
+    storageBucket: "benefitie.firebasestorage.app",
+    messagingSenderId: "270365672215",
+    appId: "1:270365672215:web:230d1491091e26ce83ed52"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  let currentAdminEmail = "srezinalm@gmail.com";
+  let currentAdminPass = "@Natthanan2911";
+
+  let highlightsData = [
+    { title: "Review 1", cover: "", images: [] },
+    { title: "Review 2", cover: "", images: [] },
+    { title: "Review 3", cover: "", images: [] },
+    { title: "Review 4", cover: "", images: [] }
+  ];
+
+  let postsData = Array(6).fill().map((_, i) => ({ image: "", caption: `Post ${i+1}` }));
+
+  db.collection("ig_review_site").doc("config").onSnapshot(doc => {
+    if (doc.exists) {
+      const d = doc.data();
+      if (d.adminEmail) currentAdminEmail = d.adminEmail;
+      if (d.adminPass) currentAdminPass = d.adminPass;
+    }
+  });
+
+  function handleLogin() {
+    const e = document.getElementById("loginEmail").value.trim();
+    const p = document.getElementById("loginPassword").value.trim();
+    if (e === currentAdminEmail && p === currentAdminPass) {
+      document.getElementById("loginBox").classList.add("hidden");
+      document.getElementById("dashboardBox").classList.remove("hidden");
+      loadData();
+    } else {
+      alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง!");
+    }
+  }
+
+  // อัปโหลดรูปภาพตรงจากโทรศัพท์ (แปลงเป็น WebP บีบอัดอัตโนมัติ)
+  function uploadDirectImage(event, targetInputId) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const maxDim = 800;
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h *= maxDim / w; w = maxDim; }
+          else { w *= maxDim / h; h = maxDim; }
+        }
+        canvas.width = w; canvas.height = h;
+        ctx.drawImage(img, 0, 0, w, h);
+        document.getElementById(targetInputId).value = canvas.toDataURL("image/webp", 0.85);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function loadData() {
+    db.collection("ig_review_site").doc("config").get().then(doc => {
+      const d = doc.exists ? doc.data() : {};
+      document.getElementById("siteTitle").value = d.siteTitle || "selris.store";
+      document.getElementById("username").value = d.username || "selris.store";
+      document.getElementById("handle").value = d.handle || "@luvselris";
+      document.getElementById("bio").value = d.bio || "welcome to luvselris ♡ \nดูรีวิวกันก่อนได้นะคะ ตัวอย่างงานเว็บ งานป้าย คอนแทค 🪽";
+      document.getElementById("bannerImg").value = d.bannerImg || "https://c.tenor.com/qvn5EduVCSDAAAAC/tenor.gif";
+      document.getElementById("profileImg").value = d.profileImg || "https://i.ibb.co/mCZ2x6pK/IMG-3558.jpg";
+      document.getElementById("discordFrame").value = d.discordFrame || "https://i.ibb.co/nqR30Rcw/IMG-3563.png";
+
+      if (d.highlights && d.highlights.length) highlightsData = d.highlights;
+      renderHighlightManagers();
+
+      if (d.posts && d.posts.length) postsData = d.posts;
+      renderPostsManager();
+
+      document.getElementById("detailsContent").value = d.details || "รายละเอียดราคาและบริการ...";
+      document.getElementById("contactUrl1").value = (d.contacts && d.contacts[0]) ? d.contacts[0].url : "";
+      document.getElementById("contactUrl2").value = (d.contacts && d.contacts[1]) ? d.contacts[1].url : "";
+
+      document.getElementById("musicUrl").value = d.musicUrl || "https://file.garden/asG8Gt-rqWIpi3II/%E0%B8%A2%E0%B8%B4%E0%B8%99%E0%B8%94%E0%B8%B5%20Ost.%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%B2%E0%B8%A5%E0%B8%94%E0%B8%B2%20sarah%20salola%20Official%20MV.mp3";
+      document.getElementById("floatPng").value = d.floatPng || "https://i.ibb.co/xN63n45/IMG-3564.png";
+    });
+  }
+
+  function renderHighlightManagers() {
+    const box = document.getElementById("highlightsManager");
+    box.innerHTML = "";
+    highlightsData.slice(0, 4).forEach((hl, idx) => {
+      const wrap = document.createElement("div");
+      wrap.className = "hl-edit-box";
+      wrap.innerHTML = `
+        <div class="field-group">
+          <label class="field-label">ชื่อไฮไลท์ที่ ${idx+1}</label>
+          <input type="text" class="input-box" value="${hl.title}" oninput="highlightsData[${idx}].title = this.value">
+        </div>
+        <div class="field-group">
+          <label class="field-label">รูปหน้าปกไฮไลท์ (ลิงก์/อัปโหลด)</label>
+          <input type="text" class="input-box" id="hl-cover-${idx}" value="${hl.cover || ''}" placeholder="URL หน้าปก" oninput="highlightsData[${idx}].cover = this.value">
+        </div>
+        <label class="file-btn">
+          ➕ อัปโหลดรูปเพิ่มเข้าสตอรี่นี้ (จากมือถือ)
+          <input type="file" accept="image/*" multiple style="display:none;" onchange="uploadStoryImages(event, ${idx})">
+        </label>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">มี ${hl.images ? hl.images.length : 0} / 25 ภาพ</div>
+        <div class="hl-gallery" id="hl-gal-${idx}"></div>
+      `;
+      box.appendChild(wrap);
+
+      // Render thumbnails
+      const gal = wrap.querySelector(`#hl-gal-${idx}`);
+      if (hl.images) {
+        hl.images.forEach((imgUrl, imgIdx) => {
+          const item = document.createElement("div");
+          item.className = "hl-img-wrap";
+          item.innerHTML = `
+            <img src="${imgUrl}">
+            <button type="button" class="hl-img-del" onclick="removeStoryImage(${idx}, ${imgIdx})">×</button>
+          `;
+          gal.appendChild(item);
+        });
+      }
+    });
+  }
+
+  function uploadStoryImages(event, hlIndex) {
+    const files = Array.from(event.target.files);
+    if (!files.length) return;
+    if (!highlightsData[hlIndex].images) highlightsData[hlIndex].images = [];
+    
+    files.forEach(file => {
+      if (highlightsData[hlIndex].images.length >= 25) {
+        alert("ไฮไลท์นี้ครบ 25 ภาพแล้วค่ะ!");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          let w = img.width, h = img.height;
+          const maxDim = 800;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h *= maxDim / w; w = maxDim; }
+            else { w *= maxDim / h; h = maxDim; }
+          }
+          canvas.width = w; canvas.height = h;
+          ctx.drawImage(img, 0, 0, w, h);
+          highlightsData[hlIndex].images.push(canvas.toDataURL("image/webp", 0.8));
+          renderHighlightManagers();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function removeStoryImage(hlIndex, imgIndex) {
+    highlightsData[hlIndex].images.splice(imgIndex, 1);
+    renderHighlightManagers();
+  }
+
+  function renderPostsManager() {
+    const box = document.getElementById("postsManager");
+    box.innerHTML = "";
+    postsData.slice(0, 6).forEach((p, idx) => {
+      const wrap = document.createElement("div");
+      wrap.className = "hl-edit-box";
+      wrap.innerHTML = `
+        <label class="field-label">โพสต์ที่ ${idx+1}</label>
+        <label class="file-btn">📁 เลือกรูปภาพโพสต์จากเครื่อง <input type="file" accept="image/*" style="display:none;" onchange="uploadDirectPost(event, ${idx})"></label>
+        <input type="text" class="input-box" id="post-img-${idx}" value="${p.image || ''}" placeholder="หรือวางลิงก์รูป" oninput="postsData[${idx}].image = this.value" style="margin-bottom:6px;">
+        <input type="text" class="input-box" value="${p.caption || ''}" placeholder="แคปชันโพสต์" oninput="postsData[${idx}].caption = this.value">
+      `;
+      box.appendChild(wrap);
+    });
+  }
+
+  function uploadDirectPost(event, postIdx) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        let w = img.width, h = img.height;
+        const maxDim = 800;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h *= maxDim / w; w = maxDim; }
+          else { w *= maxDim / h; h = maxDim; }
+        }
+        canvas.width = w; canvas.height = h;
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL("image/webp", 0.85);
+        postsData[postIdx].image = dataUrl;
+        document.getElementById(`post-img-${postIdx}`).value = dataUrl;
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function saveAllConfig() {
+    const btn = document.getElementById("saveBtn");
+    btn.disabled = true; btn.textContent = "กำลังบันทึกข้อมูล...";
+
+    const payload = {
+      siteTitle: document.getElementById("siteTitle").value.trim(),
+      username: document.getElementById("username").value.trim(),
+      handle: document.getElementById("handle").value.trim(),
+      bio: document.getElementById("bio").value.trim(),
+      bannerImg: document.getElementById("bannerImg").value.trim(),
+      profileImg: document.getElementById("profileImg").value.trim(),
+      discordFrame: document.getElementById("discordFrame").value.trim(),
+
+      highlights: highlightsData,
+      posts: postsData,
+
+      details: document.getElementById("detailsContent").value.trim(),
+      contacts: [
+        { title: "LINE Official", url: document.getElementById("contactUrl1").value.trim(), icon: "💬" },
+        { title: "Google Drive / Examples", url: document.getElementById("contactUrl2").value.trim(), icon: "📁" }
+      ],
+
+      musicUrl: document.getElementById("musicUrl").value.trim(),
+      floatPng: document.getElementById("floatPng").value.trim(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    const newPass = document.getElementById("newAdminPassword").value.trim();
+    if (newPass) {
+      payload.adminPass = newPass;
+      currentAdminPass = newPass;
+    }
+
+    try {
+      await db.collection("ig_review_site").doc("config").set(payload, { merge: true });
+      alert("บันทึกข้อมูลสำเร็จแล้วค่ะ! หน้าเว็บจะเปลี่ยนทันที");
+      document.getElementById("newAdminPassword").value = "";
+    } catch (err) {
+      alert("เกิดข้อผิดพลาด: " + err.message);
+    } finally {
+      btn.disabled = false; btn.textContent = "☁ บันทึกขึ้นระบบทันที ♡";
+    }
+  }
+
+  function logout() {
+    document.getElementById("dashboardBox").classList.add("hidden");
+    document.getElementById("loginBox").classList.remove("hidden");
+  }
+</script>
+</body>
+</html>
